@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, ReactNode } from "react";
+import React, { useState, useEffect, ReactNode } from "react";
 import "./ModalContext.css";
 
 type ContextType = {
@@ -15,6 +15,7 @@ interface closeProps {
   ShowClose: boolean;
   id: string;
 }
+// type of Modal
 type ModalType = {
   id: string;
   title: string;
@@ -26,16 +27,19 @@ type ModalType = {
   closeExisting: boolean;
   blockerClass: string;
 };
-
+// export type of Modal
 export type { ModalType };
+// Provider of modals for create and display modals
 export const ModalProvider = (props: {
   escapeClose: boolean;
   children: ReactNode;
 }) => {
-  const [modals, setModals] = React.useState<ModalType[]>([]);
+  //state of  modals
+  const [modals, setModals] = useState<ModalType[]>([]);
+  //state of  modals status
   const [status, setStatus] = useState<boolean>(false);
+  //state for the current modal
   const [currentModal, setCurrentModal] = useState<ModalType>();
-  const modalRef = useRef(null);
 
   useEffect(() => {
     console.log(props);
@@ -54,7 +58,6 @@ export const ModalProvider = (props: {
         document.removeEventListener("keydown", handleEscape, false);
       }
       setStatus(false);
-      //setCurrentModal(undefined);
     };
   }, [modals]);
 
@@ -69,7 +72,7 @@ export const ModalProvider = (props: {
         break;
     }
   };
-
+  // function for add and open a new modal
   const openModal = (options: ModalType) => {
     if (options.closeExisting === true) {
       setModals([
@@ -102,6 +105,8 @@ export const ModalProvider = (props: {
       ]);
   };
 
+  // function for close specific modal or all
+
   const closeModal = (options: { id: string } | null) => {
     if (options === null) {
       setModals([]);
@@ -111,13 +116,18 @@ export const ModalProvider = (props: {
       ]);
     }
   };
+  // function for know if a modal is active
 
   const isActive = () => {
     return status;
   };
+  // function for getting the current modal
   const getCurrentModal = () => {
     return currentModal;
   };
+
+  // function return React Element "icon" for the top-right corner of modal
+
   const ShowCloseElement = ({ ShowClose, id }: closeProps) => {
     console.log(ShowClose);
     console.log(id);
@@ -134,6 +144,9 @@ export const ModalProvider = (props: {
         </div>
       );
   };
+
+  // object with all elements needed for the modal provider
+
   const value = {
     modals: modals,
     openModal: openModal,
@@ -148,8 +161,8 @@ export const ModalProvider = (props: {
       {value.modals.map((modal: ModalType, index: number) => (
         <div
           className="modal-overlay"
-          ref={modalRef}
           key={index}
+          style={{ zIndex: index + 10 }}
           onClick={() => {
             if (modal.clickClose) {
               closeModal({ id: modal.id });
@@ -176,6 +189,7 @@ export const ModalProvider = (props: {
     </ModalContext.Provider>
   );
 };
+// function for use the modal context
 export function useModal() {
   return React.useContext(ModalContext);
 }

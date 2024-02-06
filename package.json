@@ -1,13 +1,24 @@
 {
   "name": "@florent-eeckman/modal-library",
   "private": false,
-  "version": "0.0.1",
+  "description": "modal react component",
+  "author": "Florent Eeckeman",
+  "version": "0.0.2",
+  "keywords": [
+    "react",
+    "components",
+    "library",
+    "modal"
+  ],
   "type": "module",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
+  "repository": "https://www.npmjs.com/package/@florent-eeckman/modal-library",
+  "homepage": "https://www.npmjs.com/package/@florent-eeckman/modal-library",
   "scripts": {
     "dev": "vite",
     "build": "tsc --p ./tsconfig-build.json && vite build",
