@@ -16,6 +16,9 @@
     "dist",
     "README.md"
   ],
+  "dependencies": {
+    "@florent-eeckman/modal-library": "0.0.3"
+  },
   "publishConfig": {
     "@florent-eeckman:registry": "https://npm.pkg.github.com"
   },
